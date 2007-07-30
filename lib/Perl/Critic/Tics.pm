@@ -9,13 +9,13 @@ Perl::Critic::Tics - policies for things that make me wince
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
-  $Id: Tics.pm 1519 2007-07-30 14:54:32Z rjbs $
+  $Id: Tics.pm 1522 2007-07-30 15:19:29Z rjbs $
 
 =cut
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 =head1 DESCRIPTION
 
