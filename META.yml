@@ -12,5 +12,5 @@ no_index:
     - inc
     - t
 requires: 
-  Perl::Critic: 0.21
-version: 0.003
+  Perl::Critic: 1.07
+version: 0.004

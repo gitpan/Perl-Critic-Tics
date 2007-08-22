@@ -9,17 +9,15 @@ inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Perl/Critic/Policy/Tics/ProhibitLongLines.pm
 lib/Perl/Critic/Policy/Tics/ProhibitManyArrows.pm
-lib/Perl/Critic/Policy/Tics/ProhibitNestedSubs.pm
 lib/Perl/Critic/Policy/Tics/ProhibitUseBase.pm
 lib/Perl/Critic/Tics.pm
 LICENSE
 Makefile.PL
-MANIFEST
+MANIFEST			This list of files
 META.yml
 README
 t/long-lines.t
 t/many-arrows.t
-t/nested-subs.t
 t/no-base.t
 t/pod-coverage.t
 t/pod.t
