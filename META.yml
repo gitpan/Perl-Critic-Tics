@@ -1,16 +1,18 @@
---- 
-author: Ricardo SIGNES <rjbs@cpan.org>
+---
+author:
+  - 'Ricardo SIGNES <rjbs@cpan.org>'
 distribution_type: module
-generated_by: Module::Install version 0.67
+generated_by: 'Module::Install version 0.71'
 license: perl
-meta-spec: 
+meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.3.html
   version: 1.3
 name: Perl-Critic-Tics
-no_index: 
-  directory: 
+no_index:
+  directory:
     - inc
     - t
-requires: 
+requires:
   Perl::Critic: 1.07
-version: 0.004
+tests: 't/*.t xt/*.t'
+version: 0.005
