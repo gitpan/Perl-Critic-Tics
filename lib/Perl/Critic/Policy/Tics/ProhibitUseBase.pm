@@ -1,7 +1,36 @@
 use strict;
 use warnings;
-
 package Perl::Critic::Policy::Tics::ProhibitUseBase;
+{
+  $Perl::Critic::Policy::Tics::ProhibitUseBase::VERSION = '0.007';
+}
+# ABSTRACT: do not use base.pm
+
+
+use Perl::Critic::Utils;
+use parent qw(Perl::Critic::Policy);
+
+my $DESCRIPTION = q{Use of "base" pragma};
+my $EXPLANATION = q{Don't use base, set @INC or use a base.pm alternative.};
+
+sub default_severity { $SEVERITY_LOW             }
+sub default_themes   { qw(tics)                  }
+sub applies_to       { 'PPI::Statement::Include' }
+
+sub violates {
+  my ($self, $elem, $doc) = @_;
+
+  return unless $elem->module eq 'base';
+
+  # Must be a violation...
+  return $self->violation($DESCRIPTION, $EXPLANATION, $elem);
+}
+
+1;
+
+__END__
+
+=pod
 
 =head1 NAME
 
@@ -9,7 +38,7 @@ Perl::Critic::Policy::Tics::ProhibitUseBase - do not use base.pm
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 DESCRIPTION
 
@@ -39,42 +68,15 @@ else.  Heck, it doesn't mean it's a good idea for me, either.  It's just my
 preference.  As with all Perl::Critic policies, you should decide whether it's
 right for you.
 
-=cut
-
-use Perl::Critic::Utils;
-use base qw(Perl::Critic::Policy);
-
-our $VERSION = '0.006';
-
-my $DESCRIPTION = q{Use of "base" pragma};
-my $EXPLANATION = q{Don't use base, set @INC or use a base.pm alternative.};
-
-sub default_severity { $SEVERITY_LOW             }
-sub default_themes   { qw(tics)                  }
-sub applies_to       { 'PPI::Statement::Include' }
-
-sub violates {
-  my ($self, $elem, $doc) = @_;
-
-  return unless $elem->module eq 'base';
-
-  # Must be a violation...
-  return $self->violation($DESCRIPTION, $EXPLANATION, $elem);
-}
-
-=pod
-
 =head1 AUTHOR
 
 Ricardo SIGNES <rjbs@cpan.org>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2007 Ricardo SIGNES.
+This software is copyright (c) 2007 by Ricardo SIGNES.
 
-This program is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-1;

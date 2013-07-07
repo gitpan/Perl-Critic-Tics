@@ -1,47 +1,14 @@
 use strict;
 use warnings;
-
 package Perl::Critic::Policy::Tics::ProhibitManyArrows;
+{
+  $Perl::Critic::Policy::Tics::ProhibitManyArrows::VERSION = '0.007';
+}
+# ABSTRACT: (this => is => not => good)
 
-=head1 NAME
-
-Perl::Critic::Policy::Tics::ProhibitManyArrows - (this => is => not => good)
-
-=head1 VERSION
-
-version 0.006
-
-=head1 DESCRIPTION
-
-You are not clever if you do this:
-
-  my %hash = (key1=>value1=>key2=>value2=>key3=>'value3');
-
-You are even more not clever if you do this:
-
-  my %hash = (key1=>value1=>key2=>value2=>key3=>value3=>);
-
-=head1 CONFIGURATION
-
-There is one parameter for this policy, F<max_allowed>, which specifies the
-maximum number of fat arrows that may appear as item separators.  The default
-is two.  If you really hate the fat arrow, and never want to see it, you can
-set F<max_allowed> to zero and make any occurance of C<< => >> illegal.
-
-Here are some examples of code that would fail with various F<max_allowed>
-values:
-
-  max_allowed    failing code
-  0              (foo => bar)
-  1              (foo => bar => baz)
-  2              (foo => bar => baz => quux)
-
-=cut
 
 use Perl::Critic::Utils;
-use base qw(Perl::Critic::Policy);
-
-our $VERSION = '0.006';
+use parent qw(Perl::Critic::Policy);
 
 my $DESCRIPTION = q{Too many fat-arrow-separated values in a row};
 my $EXPLANATION = q{Fat arrows should separate pairs, not produce long chains
@@ -89,19 +56,54 @@ sub violates {
   return $self->violation($DESCRIPTION, $EXPLANATION, $start);
 }
 
+1;
+
+__END__
+
 =pod
+
+=head1 NAME
+
+Perl::Critic::Policy::Tics::ProhibitManyArrows - (this => is => not => good)
+
+=head1 VERSION
+
+version 0.007
+
+=head1 DESCRIPTION
+
+You are not clever if you do this:
+
+  my %hash = (key1=>value1=>key2=>value2=>key3=>'value3');
+
+You are even more not clever if you do this:
+
+  my %hash = (key1=>value1=>key2=>value2=>key3=>value3=>);
+
+=head1 CONFIGURATION
+
+There is one parameter for this policy, F<max_allowed>, which specifies the
+maximum number of fat arrows that may appear as item separators.  The default
+is two.  If you really hate the fat arrow, and never want to see it, you can
+set F<max_allowed> to zero and make any occurance of C<< => >> illegal.
+
+Here are some examples of code that would fail with various F<max_allowed>
+values:
+
+  max_allowed    failing code
+  0              (foo => bar)
+  1              (foo => bar => baz)
+  2              (foo => bar => baz => quux)
 
 =head1 AUTHOR
 
 Ricardo SIGNES <rjbs@cpan.org>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2007 Ricardo SIGNES.
+This software is copyright (c) 2007 by Ricardo SIGNES.
 
-This program is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-1;

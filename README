@@ -1,2 +1,13 @@
 
-This distribution includes more policies for Perl::Critic.
+
+This archive contains the distribution Perl-Critic-Tics,
+version 0.007:
+
+  policies for things that make me wince
+
+This software is copyright (c) 2007 by Ricardo SIGNES.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+

@@ -1,15 +1,75 @@
+
 use strict;
 use warnings;
 
-use inc::Module::Install;
 
-name          ('Perl-Critic-Tics');
-author        ('Ricardo SIGNES <rjbs@cpan.org>');
-license       ('perl');
-version_from  ('lib/Perl/Critic/Tics.pm');
 
-requires('Perl::Critic'     => 1.07); # to get core ProhibitNestedSubs
+use ExtUtils::MakeMaker 6.30;
 
-author_tests('xt');
 
-WriteAll();
+
+my %WriteMakefileArgs = (
+  "ABSTRACT" => "policies for things that make me wince",
+  "AUTHOR" => "Ricardo SIGNES <rjbs\@cpan.org>",
+  "BUILD_REQUIRES" => {},
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
+  },
+  "DISTNAME" => "Perl-Critic-Tics",
+  "EXE_FILES" => [],
+  "LICENSE" => "perl",
+  "NAME" => "Perl::Critic::Tics",
+  "PREREQ_PM" => {
+    "Perl::Critic::Policy" => 0,
+    "Perl::Critic::Utils" => 0,
+    "Perl::Critic::Violation" => 0,
+    "parent" => 0,
+    "strict" => 0,
+    "warnings" => 0
+  },
+  "TEST_REQUIRES" => {
+    "File::Find" => 0,
+    "File::Temp" => 0,
+    "Perl::Critic::TestUtils" => 0,
+    "Test::More" => "0.96"
+  },
+  "VERSION" => "0.007",
+  "test" => {
+    "TESTS" => "t/*.t"
+  }
+);
+
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
+  my $tr = delete $WriteMakefileArgs{TEST_REQUIRES};
+  my $br = $WriteMakefileArgs{BUILD_REQUIRES};
+  for my $mod ( keys %$tr ) {
+    if ( exists $br->{$mod} ) {
+      $br->{$mod} = $tr->{$mod} if $tr->{$mod} > $br->{$mod};
+    }
+    else {
+      $br->{$mod} = $tr->{$mod};
+    }
+  }
+}
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
+  my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
+  my $pp = $WriteMakefileArgs{PREREQ_PM};
+  for my $mod ( keys %$br ) {
+    if ( exists $pp->{$mod} ) {
+      $pp->{$mod} = $br->{$mod} if $br->{$mod} > $pp->{$mod};
+    }
+    else {
+      $pp->{$mod} = $br->{$mod};
+    }
+  }
+}
+
+delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
+
+WriteMakefile(%WriteMakefileArgs);
+
+
+
