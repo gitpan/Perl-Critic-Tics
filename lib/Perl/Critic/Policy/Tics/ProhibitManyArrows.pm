@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package Perl::Critic::Policy::Tics::ProhibitManyArrows;
 {
-  $Perl::Critic::Policy::Tics::ProhibitManyArrows::VERSION = '0.007';
+  $Perl::Critic::Policy::Tics::ProhibitManyArrows::VERSION = '0.008';
 }
 # ABSTRACT: (this => is => not => good)
 
@@ -62,13 +62,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Perl::Critic::Policy::Tics::ProhibitManyArrows - (this => is => not => good)
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 DESCRIPTION
 

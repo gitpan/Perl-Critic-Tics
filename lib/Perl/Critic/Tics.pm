@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package Perl::Critic::Tics;
 {
-  $Perl::Critic::Tics::VERSION = '0.007';
+  $Perl::Critic::Tics::VERSION = '0.008';
 }
 # ABSTRACT: policies for things that make me wince
 
@@ -13,13 +13,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Perl::Critic::Tics - policies for things that make me wince
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 DESCRIPTION
 

@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package Perl::Critic::Policy::Tics::ProhibitUseBase;
 {
-  $Perl::Critic::Policy::Tics::ProhibitUseBase::VERSION = '0.007';
+  $Perl::Critic::Policy::Tics::ProhibitUseBase::VERSION = '0.008';
 }
 # ABSTRACT: do not use base.pm
 
@@ -32,13 +32,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Perl::Critic::Policy::Tics::ProhibitUseBase - do not use base.pm
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 DESCRIPTION
 

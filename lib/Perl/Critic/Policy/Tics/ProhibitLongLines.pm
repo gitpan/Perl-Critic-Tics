@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package Perl::Critic::Policy::Tics::ProhibitLongLines;
 {
-  $Perl::Critic::Policy::Tics::ProhibitLongLines::VERSION = '0.007';
+  $Perl::Critic::Policy::Tics::ProhibitLongLines::VERSION = '0.008';
 }
 # ABSTRACT: 80 x 40 for life!
 
@@ -58,6 +58,9 @@ sub violates {
   my $base  = $self->{base_max};
   my $limit = $self->{hard_max};
 
+  my $top = $elem->top();
+  my $fn  = $top->can('filename') ? $top->filename() : undef;
+
   LINE: for my $ln (1 .. @lines) {
     my $length = length $lines[ $ln - 1 ];
 
@@ -71,7 +74,7 @@ sub violates {
         $self->get_severity,
       );
 
-      $viol->_set_location([ $ln, 1, 1 ]);
+      $viol->_set_location([ $ln, 1, $ln, 1, $fn ]);
 
       push @hard_violations, $viol;
     } else {
@@ -82,7 +85,7 @@ sub violates {
         $self->get_severity,
       );
 
-      $viol->_set_location([ $ln, 1, 1 ]);
+      $viol->_set_location([ $ln, 1, $ln, 1, $fn ]);
 
       push @soft_violations, $viol;
     }
@@ -101,7 +104,7 @@ sub violates {
 {
   package Perl::Critic::Tics::Violation::VirtualPos;
 {
-  $Perl::Critic::Tics::Violation::VirtualPos::VERSION = '0.007';
+  $Perl::Critic::Tics::Violation::VirtualPos::VERSION = '0.008';
 }
   BEGIN {require Perl::Critic::Violation; our @ISA = 'Perl::Critic::Violation';}
   sub _set_location { my ($self, $pos) = @_; $self->{__PACKAGE__}{pos} = $pos; }
@@ -114,13 +117,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Perl::Critic::Policy::Tics::ProhibitLongLines - 80 x 40 for life!
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 DESCRIPTION
 
