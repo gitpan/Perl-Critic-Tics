@@ -1,11 +1,30 @@
 use strict;
 use warnings;
 package Perl::Critic::Policy::Tics::ProhibitLongLines;
-{
-  $Perl::Critic::Policy::Tics::ProhibitLongLines::VERSION = '0.008';
-}
 # ABSTRACT: 80 x 40 for life!
-
+$Perl::Critic::Policy::Tics::ProhibitLongLines::VERSION = '0.009';
+#pod =head1 DESCRIPTION
+#pod
+#pod Please keep your code to about eighty columns wide, the One True Terminal
+#pod Width.  Going over that occasionally is okay, but only once in a while.
+#pod
+#pod This policy always throws a violation for extremely long lines.  It will also
+#pod throw a violation if there are too many lines that are slightly longer than the
+#pod preferred maximum length.  If a only few lines exceed the preferred maximum
+#pod width, they're let slide and only extremely long lines are violations.
+#pod
+#pod =head1 CONFIGURATION
+#pod
+#pod There are three configuration options for this policy:
+#pod
+#pod   base_max - the preferred maximum line length (default: 80)
+#pod   hard_max - the length beyond which a line is "extremely long"
+#pod              (default: base_max * 1.5)
+#pod
+#pod   pct_allowed - the percentage of total lines which may fall between base_max
+#pod                 and hard_max before those violations are reported (default: 1)
+#pod
+#pod =cut
 
 use Perl::Critic::Utils;
 use parent qw(Perl::Critic::Policy);
@@ -74,7 +93,7 @@ sub violates {
         $self->get_severity,
       );
 
-      $viol->_set_location([ $ln, 1, $ln, 1, $fn ]);
+      $viol->_set_location([ $ln, 1, 1, $ln, $fn ], $lines[ $ln - 1 ]);
 
       push @hard_violations, $viol;
     } else {
@@ -85,7 +104,7 @@ sub violates {
         $self->get_severity,
       );
 
-      $viol->_set_location([ $ln, 1, $ln, 1, $fn ]);
+      $viol->_set_location([ $ln, 1, 1, $ln, $fn ], $lines[ $ln - 1 ]);
 
       push @soft_violations, $viol;
     }
@@ -102,13 +121,16 @@ sub violates {
 }
 
 {
-  package Perl::Critic::Tics::Violation::VirtualPos;
-{
-  $Perl::Critic::Tics::Violation::VirtualPos::VERSION = '0.008';
-}
+  package # hide
+    Perl::Critic::Tics::Violation::VirtualPos;
   BEGIN {require Perl::Critic::Violation; our @ISA = 'Perl::Critic::Violation';}
-  sub _set_location { my ($self, $pos) = @_; $self->{__PACKAGE__}{pos} = $pos; }
+  sub _set_location {
+    my ($self, $pos, $line) = @_;
+    $self->{__PACKAGE__}{pos}  = $pos;
+    $self->{__PACKAGE__}{line} = $line;
+  }
   sub location { $_[0]->{__PACKAGE__}{pos} }
+  sub source   { $_[0]->{__PACKAGE__}{line} }
 }
 
 1;
@@ -125,7 +147,7 @@ Perl::Critic::Policy::Tics::ProhibitLongLines - 80 x 40 for life!
 
 =head1 VERSION
 
-version 0.008
+version 0.009
 
 =head1 DESCRIPTION
 

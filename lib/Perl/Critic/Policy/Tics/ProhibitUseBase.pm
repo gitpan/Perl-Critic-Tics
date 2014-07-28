@@ -1,11 +1,37 @@
 use strict;
 use warnings;
 package Perl::Critic::Policy::Tics::ProhibitUseBase;
-{
-  $Perl::Critic::Policy::Tics::ProhibitUseBase::VERSION = '0.008';
-}
 # ABSTRACT: do not use base.pm
-
+$Perl::Critic::Policy::Tics::ProhibitUseBase::VERSION = '0.009';
+#pod =head1 DESCRIPTION
+#pod
+#pod   use base qw(Baseclass);
+#pod
+#pod You've seen that a hundred times, right?  That doesn't mean that it's a good
+#pod idea.  It screws with C<$VERSION>, it alters (for the worse) the exceptions
+#pod reported by failure-to-require, it doesn't let you call the base class's
+#pod C<import> method, it pushes to C<@INC> rather than replacing it, and it uses
+#pod and documents interactions with L<fields|fields>, which can lead one to believe
+#pod that fields are even remotely relevant to modern (or any!) development of Perl
+#pod classes.
+#pod
+#pod There are a lot of ways around using C<base>.  Pick one.
+#pod
+#pod =head1 WARNING
+#pod
+#pod This policy caused a bit of controversy, largely in this form:
+#pod
+#pod   These behaviors are either correct or can be worked around, and using base.pm
+#pod   protects you from the problem of remembering to load prereqs and from
+#pod   setting @INC at runtime.
+#pod
+#pod These are true statements.  My chosen workaround for all these problems is to
+#pod I<not use base.pm>.  That doesn't mean it's a good idea for you, or anyone
+#pod else.  Heck, it doesn't mean it's a good idea for me, either.  It's just my
+#pod preference.  As with all Perl::Critic policies, you should decide whether it's
+#pod right for you.
+#pod
+#pod =cut
 
 use Perl::Critic::Utils;
 use parent qw(Perl::Critic::Policy);
@@ -40,7 +66,7 @@ Perl::Critic::Policy::Tics::ProhibitUseBase - do not use base.pm
 
 =head1 VERSION
 
-version 0.008
+version 0.009
 
 =head1 DESCRIPTION
 

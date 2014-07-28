@@ -1,11 +1,34 @@
 use strict;
 use warnings;
 package Perl::Critic::Policy::Tics::ProhibitManyArrows;
-{
-  $Perl::Critic::Policy::Tics::ProhibitManyArrows::VERSION = '0.008';
-}
 # ABSTRACT: (this => is => not => good)
-
+$Perl::Critic::Policy::Tics::ProhibitManyArrows::VERSION = '0.009';
+#pod =head1 DESCRIPTION
+#pod
+#pod You are not clever if you do this:
+#pod
+#pod   my %hash = (key1=>value1=>key2=>value2=>key3=>'value3');
+#pod
+#pod You are even more not clever if you do this:
+#pod
+#pod   my %hash = (key1=>value1=>key2=>value2=>key3=>value3=>);
+#pod
+#pod =head1 CONFIGURATION
+#pod
+#pod There is one parameter for this policy, F<max_allowed>, which specifies the
+#pod maximum number of fat arrows that may appear as item separators.  The default
+#pod is two.  If you really hate the fat arrow, and never want to see it, you can
+#pod set F<max_allowed> to zero and make any occurance of C<< => >> illegal.
+#pod
+#pod Here are some examples of code that would fail with various F<max_allowed>
+#pod values:
+#pod
+#pod   max_allowed    failing code
+#pod   0              (foo => bar)
+#pod   1              (foo => bar => baz)
+#pod   2              (foo => bar => baz => quux)
+#pod
+#pod =cut
 
 use Perl::Critic::Utils;
 use parent qw(Perl::Critic::Policy);
@@ -70,7 +93,7 @@ Perl::Critic::Policy::Tics::ProhibitManyArrows - (this => is => not => good)
 
 =head1 VERSION
 
-version 0.008
+version 0.009
 
 =head1 DESCRIPTION
 
